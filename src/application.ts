@@ -46,8 +46,6 @@ export class CodingTestApplication extends BootMixin(
     // 显示详细报错到前端
     this.bind(RestBindings.ERROR_WRITER_OPTIONS).to({debug: true});
 
-    console.debug({proxy: this.getCurrentProxy()});
-
     axios.defaults.proxy = this.getCurrentProxy();
   }
 
