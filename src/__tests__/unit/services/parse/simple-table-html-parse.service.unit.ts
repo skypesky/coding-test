@@ -1,14 +1,14 @@
 import {expect} from "@loopback/testlab";
 import {readFileSync} from "fs";
-import {DataTableParseService} from "../../services/data-table-parse.service";
+import {SimpleTableHtmlParseService} from "../../../../services/parse/simple-table-html-parse.service";
 
-describe(`data-table-parse.service.unit`, () => {
-  let dataTableParseService: DataTableParseService;
+describe(`simple-table-html-parse.service.unit`, () => {
+  let simpleTableHtmlParseService: SimpleTableHtmlParseService;
   let hasDataHtml: string;
   let notDataHtml: string;
 
   before(async () => {
-    dataTableParseService = new DataTableParseService();
+    simpleTableHtmlParseService = new SimpleTableHtmlParseService();
 
     hasDataHtml = readFileSync(
       `${process.cwd()}/src/__tests__/fixtures/data/has-data.html`
@@ -19,7 +19,7 @@ describe(`data-table-parse.service.unit`, () => {
   });
 
   it(`#getEthereumTransactionInfos() should be work!`, () => {
-    const datas = dataTableParseService.excute(hasDataHtml).parse();
+    const datas = simpleTableHtmlParseService.excute(hasDataHtml).parse();
 
     expect(!!datas.length).eql(true);
 
@@ -47,30 +47,32 @@ describe(`data-table-parse.service.unit`, () => {
 
   describe(`#isEmpty`, () => {
     it(`#isEmpty(Empty String) should be return true!`, () => {
-      expect(dataTableParseService.excute("").isEmpty()).eql(true);
+      expect(simpleTableHtmlParseService.excute("").isEmpty()).eql(true);
     });
 
-    // @tips: 注意此处可以也可使用异步来做
     it(`#isEmpty(No Data String) should be return true!`, async () => {
-      expect(dataTableParseService.excute("abc").isEmpty()).eql(true);
-      expect(dataTableParseService.excute(notDataHtml).isEmpty()).eql(true);
+      expect(simpleTableHtmlParseService.excute(notDataHtml).isEmpty()).eql(
+        true
+      );
     });
 
     it(`#isEmpty(Has Data String) should be return true!`, () => {
-      expect(dataTableParseService.excute(hasDataHtml).isEmpty()).eql(false);
+      expect(simpleTableHtmlParseService.excute(hasDataHtml).isEmpty()).eql(
+        false
+      );
     });
   });
 
   describe(`#getTotalRows`, () => {
     it(`#getTotalRows(empty data) should be return 0`, () => {
-      expect(dataTableParseService.excute("").getTotalRows()).eql(0);
-      expect(dataTableParseService.excute("abc").getTotalRows()).eql(0);
+      expect(simpleTableHtmlParseService.excute("").getTotalRows()).eql(0);
+      expect(simpleTableHtmlParseService.excute("abc").getTotalRows()).eql(0);
     });
 
     it(`#getTotalRows(has data) should be return actual rows`, () => {
-      expect(dataTableParseService.excute(hasDataHtml).getTotalRows()).eql(
-        1441
-      );
+      expect(
+        simpleTableHtmlParseService.excute(hasDataHtml).getTotalRows()
+      ).eql(1441);
     });
   });
 });

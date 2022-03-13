@@ -1,12 +1,12 @@
 import {/* inject, */ BindingScope, injectable} from "@loopback/core";
 import {CheerioAPI, Element, load} from "cheerio";
 import {isEmpty} from "lodash";
-import {Parse} from "../interfaces/parse.interface";
-import {EthereumTransactionInfo} from "../models/ethereum-transaction-info.model";
+import {HtmlParse} from "../../interfaces/parse.interface";
+import {EthereumTransactionInfo} from "../../models/ethereum-transaction-info.model";
 
 @injectable({scope: BindingScope.TRANSIENT})
-export class DataTableParseService
-  implements Parse<string, EthereumTransactionInfo[]>
+export class SimpleTableHtmlParseService
+  implements HtmlParse<string, EthereumTransactionInfo[]>
 {
   private $: CheerioAPI;
 
@@ -47,22 +47,15 @@ export class DataTableParseService
   }
 
   public isEmpty(): boolean {
-    if (isEmpty(this.$.html())) {
+    if (isEmpty(this.$.text())) {
       return true;
     }
 
-    const $ = this.$;
+    const hasEmptyDataMessage: boolean = this.$.text().includes(
+      `There are no matching entries`
+    );
 
-    const hasEmptyDataMessage: boolean = $(
-        `#paywall_mask > table > tbody > tr:nth-child(1) > td > div`
-      )
-        .text()
-        .includes(`There are no matching entries`),
-      pageSize: number = +$(
-        `#ContentPlaceHolder1_ddlRecordsPerPage > option[selected="selected"]`
-      ).text();
-
-    return hasEmptyDataMessage || !pageSize;
+    return hasEmptyDataMessage;
   }
 
   public getTotalRows(): number {
@@ -83,7 +76,22 @@ export class DataTableParseService
   }
 
   private getMethod(element: Element): string {
-    return this.$(element).find(`td:nth-child(3)`).text().trim();
+    const valueFromADataOriginalTitle = this.$(element)
+        .find(`td:nth-child(3) span`)
+        .attr(`data-original-title`)
+        ?.trim(),
+      valueFromATitle = this.$(element)
+        .find(`td:nth-child(3) span`)
+        .attr(`title`)
+        ?.trim(),
+      valueFromText = this.$(element)
+        .find(`td:nth-child(3)`)
+        .attr(`title`)
+        ?.trim();
+
+    return (
+      valueFromADataOriginalTitle ?? valueFromATitle ?? valueFromText ?? ""
+    );
   }
 
   private getBlock(element: Element): number {
@@ -123,21 +131,21 @@ export class DataTableParseService
     const valueFromADataOriginalTitle: string =
         this.$(element)
           .find(`td:nth-child(9) a`)
-          .attr("data-original-title")
+          .attr("href")
           ?.trim()
           ?.match(UID_MATCH_REGEX)?.[0] ?? "",
-      valueFromSpan: string = this.$(element)
-        .find(`td:nth-child(9) span`)
-        .text()
-        .trim(),
       valueFromATitle: string =
         this.$(element)
           .find(`td:nth-child(9) a`)
           .attr("title")
           ?.trim()
-          ?.match(UID_MATCH_REGEX)?.[0] ?? "";
+          ?.match(UID_MATCH_REGEX)?.[0] ?? "",
+      valueFromSpan: string = this.$(element)
+        .find(`td:nth-child(9) span`)
+        .text()
+        .trim();
 
-    return valueFromADataOriginalTitle || valueFromSpan || valueFromATitle;
+    return valueFromADataOriginalTitle || valueFromATitle || valueFromSpan;
   }
 
   private getValue(element: Element): string {

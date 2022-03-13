@@ -1,18 +1,21 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {service} from "@loopback/core";
 import {Count, Filter, repository} from "@loopback/repository";
-import {get, getModelSchemaRef, param, post, response} from "@loopback/rest";
+import {del, get, getModelSchemaRef, param, response, tags} from "@loopback/rest";
 import {EthereumTransactionInfo} from "../models";
 import {EthereumTransactionInfoRepository} from "../repositories";
-import {EthereumTransactionInfoService} from "../services/ethereum-transaction-info.service";
+import {EthereumTransactionInfoFastService} from "../services/ethereum-transaction-info-fast.service";
+import {EthereumTransactionInfoSlowService} from "../services/ethereum-transaction-info-slow.service";
 
 export class EthereumTransactionInfoController {
   constructor(
-    @service()
-    public ethereumTransactionInfoService: EthereumTransactionInfoService,
+    @service(EthereumTransactionInfoSlowService)
+    public ethereumTransactionInfoSlowService: EthereumTransactionInfoSlowService,
+    @service(EthereumTransactionInfoFastService)
+    public ethereumTransactionInfoFastService: EthereumTransactionInfoFastService,
     @repository(EthereumTransactionInfoRepository)
     public ethereumTransactionInfoRepository: EthereumTransactionInfoRepository
-  ) {}
+  ) { }
 
   @get("/api/txs/{address}")
   @response(200, {
@@ -28,7 +31,7 @@ export class EthereumTransactionInfoController {
       }
     }
   })
-  async findByAddress(
+  async slowFindByAddress(
     @param.path.string("address", {
       example: "0xeb2a81e229b68c1c22b6683275c00945f9872d90"
     })
@@ -82,19 +85,23 @@ export class EthereumTransactionInfoController {
         address
       }
     };
-    return this.ethereumTransactionInfoService.findByAddress(filter);
+    return this.ethereumTransactionInfoSlowService.findByAddress(filter);
   }
 
-  @get("/api/txs/fast/{address}")
-  @response(200, {
-    description: "Array of EthereumTransactionInfo model instances",
-    content: {
-      "application/json": {
-        schema: {
-          type: "array",
-          items: getModelSchemaRef(EthereumTransactionInfo, {
-            includeRelations: true
-          })
+  @get("/api/txs/fast/{address}", {
+    summary: "请使用该接口检查coding test作业",
+    responses: {
+      200: {
+        description: "Array of EthereumTransactionInfo model instances",
+        content: {
+          "application/json": {
+            schema: {
+              type: "array",
+              items: getModelSchemaRef(EthereumTransactionInfo, {
+                includeRelations: true
+              })
+            }
+          }
         }
       }
     }
@@ -153,10 +160,11 @@ export class EthereumTransactionInfoController {
         address
       }
     };
-    return this.ethereumTransactionInfoService.fastFindByAddress(filter);
+    return this.ethereumTransactionInfoFastService.findByAddress(filter);
   }
 
-  @post("/api/txs/cleanCache")
+  @del("/api/txs/cleanCache")
+  @tags('此接口可用于清空缓存')
   public async cleanCache(): Promise<Count> {
     return this.ethereumTransactionInfoRepository.deleteAll();
   }

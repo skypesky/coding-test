@@ -1,9 +1,9 @@
-import {CodingTestApplication} from "../..";
 import {
+  Client,
   createRestAppClient,
-  givenHttpServerConfig,
-  Client
+  givenHttpServerConfig
 } from "@loopback/testlab";
+import {CodingTestApplication} from "../..";
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({
@@ -19,6 +19,13 @@ export async function setupApplication(): Promise<AppWithClient> {
   });
 
   await app.boot();
+
+  // add test database
+  app.bind("datasources.config.db").to({
+    name: "db",
+    connector: "memory"
+  });
+
   await app.start();
 
   const client = createRestAppClient(app);
