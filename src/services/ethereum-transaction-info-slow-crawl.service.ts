@@ -1,9 +1,8 @@
-import {BindingScope, inject, injectable, service} from "@loopback/core";
+import {BindingScope, injectable, service} from "@loopback/core";
 import axios from "axios";
 import {AxiosResponse} from "axios-https-proxy-fix";
-import {Crawl} from "../interfaces/crawl.interface";
+import {CrawlService} from "../interfaces/crawl-service.interface";
 import {EthereumTransactionInfo} from "../models/ethereum-transaction-info.model";
-import {AppProxy} from "../type";
 import {DataTableParseService} from "./data-table-parse.service";
 
 /**
@@ -15,14 +14,12 @@ import {DataTableParseService} from "./data-table-parse.service";
  */
 @injectable({scope: BindingScope.TRANSIENT})
 export class EthereumTransactionInfoSlowCrawlService
-  implements Crawl<EthereumTransactionInfo[]>
+  implements CrawlService<EthereumTransactionInfo[]>
 {
   constructor(
-    @inject("appProxy")
-    public proxy: AppProxy,
     @service()
     public dataTableParseService: DataTableParseService
-  ) {}
+  ) { }
 
   public async crawl(): Promise<EthereumTransactionInfo[]> {
     const pageSize = 100,
@@ -46,7 +43,6 @@ export class EthereumTransactionInfoSlowCrawlService
       .get<string, AxiosResponse<string>>(
         `https://etherscan.io/txs?a=0xeb2a81e229b68c1c22b6683275c00945f9872d90&ps=${pageSize}&p=${pageNumber}`,
         {
-          proxy: this.proxy,
           responseType: "document"
         }
       )
