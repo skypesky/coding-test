@@ -3,7 +3,7 @@ import axios from "axios";
 import {AxiosResponse} from "axios-https-proxy-fix";
 import {CrawlService} from "../interfaces/crawl-service.interface";
 import {EthereumTransactionInfo} from "../models/ethereum-transaction-info.model";
-import {SimpleTableHtmlParseService} from "./data-table-parse.service";
+import {SimpleTableHtmlParseService} from "./simple-table-html-parse.service";
 
 /**
  *
@@ -19,7 +19,7 @@ export class EthereumTransactionInfoSlowCrawlService
   constructor(
     @service()
     public simpleTableHtmlParseService: SimpleTableHtmlParseService
-  ) {}
+  ) { }
 
   public async crawl(): Promise<EthereumTransactionInfo[]> {
     const pageSize = 100,

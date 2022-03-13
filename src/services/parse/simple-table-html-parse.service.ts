@@ -1,8 +1,8 @@
-import {/* inject, */ BindingScope, injectable} from "@loopback/core";
+import { /* inject, */ BindingScope, injectable} from "@loopback/core";
 import {CheerioAPI, Element, load} from "cheerio";
 import {isEmpty} from "lodash";
-import {HtmlParse} from "../interfaces/parse.interface";
-import {EthereumTransactionInfo} from "../models/ethereum-transaction-info.model";
+import {HtmlParse} from "../../interfaces/parse.interface";
+import {EthereumTransactionInfo} from "../../models/ethereum-transaction-info.model";
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class SimpleTableHtmlParseService
@@ -10,7 +10,7 @@ export class SimpleTableHtmlParseService
 {
   private $: CheerioAPI;
 
-  constructor() {}
+  constructor() { }
 
   public excute(html: string): this {
     this.$ = load(html);
@@ -54,10 +54,10 @@ export class SimpleTableHtmlParseService
     const $ = this.$;
 
     const hasEmptyDataMessage: boolean = $(
-        `#paywall_mask > table > tbody > tr:nth-child(1) > td > div`
-      )
-        .text()
-        .includes(`There are no matching entries`),
+      `#paywall_mask > table > tbody > tr:nth-child(1) > td > div`
+    )
+      .text()
+      .includes(`There are no matching entries`),
       pageSize: number = +$(
         `#ContentPlaceHolder1_ddlRecordsPerPage > option[selected="selected"]`
       ).text();
@@ -84,9 +84,9 @@ export class SimpleTableHtmlParseService
 
   private getMethod(element: Element): string {
     const valueFromADataOriginalTitle = this.$(element)
-        .find(`td:nth-child(3) span`)
-        .attr(`data-original-title`)
-        ?.trim(),
+      .find(`td:nth-child(3) span`)
+      .attr(`data-original-title`)
+      ?.trim(),
       valueFromATitle = this.$(element)
         .find(`td:nth-child(3) span`)
         .attr(`title`)
@@ -111,11 +111,11 @@ export class SimpleTableHtmlParseService
 
   private getFrom(element: Element): string {
     const valueFromADataOriginalTitle: string =
-        this.$(element)
-          .find(`td:nth-child(7) a`)
-          .attr("data-original-title")
-          ?.trim()
-          ?.match(UID_MATCH_REGEX)?.[0] ?? "",
+      this.$(element)
+        .find(`td:nth-child(7) a`)
+        .attr("data-original-title")
+        ?.trim()
+        ?.match(UID_MATCH_REGEX)?.[0] ?? "",
       valueFromSpan: string = this.$(element)
         .find(`td:nth-child(7) > span`)
         .text()
@@ -136,11 +136,11 @@ export class SimpleTableHtmlParseService
 
   private getTo(element: Element): string {
     const valueFromADataOriginalTitle: string =
-        this.$(element)
-          .find(`td:nth-child(9) a`)
-          .attr("href")
-          ?.trim()
-          ?.match(UID_MATCH_REGEX)?.[0] ?? "",
+      this.$(element)
+        .find(`td:nth-child(9) a`)
+        .attr("href")
+        ?.trim()
+        ?.match(UID_MATCH_REGEX)?.[0] ?? "",
       valueFromATitle: string =
         this.$(element)
           .find(`td:nth-child(9) a`)
