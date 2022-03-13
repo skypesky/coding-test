@@ -12,7 +12,7 @@ export class EthereumTransactionInfoController {
     @service(EthereumTransactionInfoSlowService)
     public ethereumTransactionInfoSlowService: EthereumTransactionInfoSlowService,
     @service(EthereumTransactionInfoFastService)
-    public ethereumTransactionInfoFastService: EthereumTransactionInfoSlowService,
+    public ethereumTransactionInfoFastService: EthereumTransactionInfoFastService,
     @repository(EthereumTransactionInfoRepository)
     public ethereumTransactionInfoRepository: EthereumTransactionInfoRepository
   ) {}
