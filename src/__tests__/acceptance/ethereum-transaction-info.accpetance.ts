@@ -75,4 +75,32 @@ describe(`ethereum-transaction-info.accpetance`, () => {
       expect(response.body).to.containDeep(expected);
     });
   });
+
+  describe(`#cleanCache`, () => {
+    it(`#cleanCache find ethereumTransactionInfos `, async function () {
+      this.timeout(30000);
+
+      await ethereumTransactionInfoRepository.createAll([
+        new EthereumTransactionInfo({
+          "txnHash":
+            "0x00b7ab5c6ff7ea29166029be256c06c1357f314bcab622532bdc09f78041cc2d",
+          "address": "0xeb2a81e229b68c1c22b6683275c00945f9872d90",
+          "method": "0x414bf389",
+          "block": 12825815,
+          "createTime": "2021-07-14 15:03:54",
+          "from": "0xeb2a81e229b68c1c22b6683275c00945f9872d90",
+          "tradingDirection": "OUT",
+          "to": "0xe592427a0aece92de3edee1f18e0157c05861564",
+          "value": "0.1 Ether",
+          "txnFee": 0.00564969
+        })
+      ]);
+
+      const response = await client.delete("/api/txs/cleanCache").expect(200);
+
+      expect(response.body).to.containDeep({
+        count: 1
+      });
+    });
+  });
 });
