@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {service} from "@loopback/core";
 import {Count, Filter, repository} from "@loopback/repository";
-import {del, get, getModelSchemaRef, param, response} from "@loopback/rest";
+import {del, get, getModelSchemaRef, param, response, tags} from "@loopback/rest";
 import {EthereumTransactionInfo} from "../models";
 import {EthereumTransactionInfoRepository} from "../repositories";
 import {EthereumTransactionInfoFastService} from "../services/ethereum-transaction-info-fast.service";
@@ -15,7 +15,7 @@ export class EthereumTransactionInfoController {
     public ethereumTransactionInfoFastService: EthereumTransactionInfoFastService,
     @repository(EthereumTransactionInfoRepository)
     public ethereumTransactionInfoRepository: EthereumTransactionInfoRepository
-  ) {}
+  ) { }
 
   @get("/api/txs/{address}")
   @response(200, {
@@ -88,16 +88,20 @@ export class EthereumTransactionInfoController {
     return this.ethereumTransactionInfoSlowService.findByAddress(filter);
   }
 
-  @get("/api/txs/fast/{address}")
-  @response(200, {
-    description: "Array of EthereumTransactionInfo model instances",
-    content: {
-      "application/json": {
-        schema: {
-          type: "array",
-          items: getModelSchemaRef(EthereumTransactionInfo, {
-            includeRelations: true
-          })
+  @get("/api/txs/fast/{address}", {
+    summary: "请使用该接口检查coding test作业",
+    responses: {
+      200: {
+        description: "Array of EthereumTransactionInfo model instances",
+        content: {
+          "application/json": {
+            schema: {
+              type: "array",
+              items: getModelSchemaRef(EthereumTransactionInfo, {
+                includeRelations: true
+              })
+            }
+          }
         }
       }
     }
@@ -160,6 +164,7 @@ export class EthereumTransactionInfoController {
   }
 
   @del("/api/txs/cleanCache")
+  @tags('此接口可用于清空缓存')
   public async cleanCache(): Promise<Count> {
     return this.ethereumTransactionInfoRepository.deleteAll();
   }
