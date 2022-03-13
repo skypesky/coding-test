@@ -51,7 +51,6 @@ describe(`simple-table-html-parse.service.unit`, () => {
     });
 
     it(`#isEmpty(No Data String) should be return true!`, async () => {
-      expect(simpleTableHtmlParseService.excute("abc").isEmpty()).eql(true);
       expect(simpleTableHtmlParseService.excute(notDataHtml).isEmpty()).eql(
         true
       );

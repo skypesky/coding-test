@@ -47,22 +47,15 @@ export class SimpleTableHtmlParseService
   }
 
   public isEmpty(): boolean {
-    if (isEmpty(this.$.html())) {
+    if (isEmpty(this.$.text())) {
       return true;
     }
 
-    const $ = this.$;
+    const hasEmptyDataMessage: boolean = this.$.text().includes(
+      `There are no matching entries`
+    );
 
-    const hasEmptyDataMessage: boolean = $(
-        `#paywall_mask > table > tbody > tr:nth-child(1) > td > div`
-      )
-        .text()
-        .includes(`There are no matching entries`),
-      pageSize: number = +$(
-        `#ContentPlaceHolder1_ddlRecordsPerPage > option[selected="selected"]`
-      ).text();
-
-    return hasEmptyDataMessage || !pageSize;
+    return hasEmptyDataMessage;
   }
 
   public getTotalRows(): number {
