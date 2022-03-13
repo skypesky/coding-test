@@ -50,6 +50,10 @@ export class CodingTestApplication extends BootMixin(
     // 绑定provider
     this.bind<Axios>(AxiosProvider.KEY).toProvider(AxiosProvider);
 
+    const proxy = this.getCurrentProxy();
+
+    console.log({proxy});
+
     axios.defaults.proxy = this.getCurrentProxy();
   }
 
