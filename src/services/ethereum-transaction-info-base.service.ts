@@ -1,4 +1,4 @@
-import { /* inject, */ BindingScope, injectable} from "@loopback/core";
+import {/* inject, */ BindingScope, injectable} from "@loopback/core";
 import {Filter, repository} from "@loopback/repository";
 import {isEmpty} from "lodash";
 import {CrawlService} from "../interfaces/crawl-service.interface";
@@ -10,7 +10,7 @@ export class EthereumTransactionInfoBaseService {
   @repository(EthereumTransactionInfoRepository)
   public ethereumTransactionInfoRepository: EthereumTransactionInfoRepository;
 
-  constructor(public crawlService: CrawlService) { }
+  constructor(public crawlService: CrawlService) {}
 
   public async findByAddress(
     filter?: Filter<EthereumTransactionInfo>

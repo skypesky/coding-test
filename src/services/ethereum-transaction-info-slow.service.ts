@@ -1,4 +1,4 @@
-import { /* inject, */ BindingScope, injectable, service} from "@loopback/core";
+import {/* inject, */ BindingScope, injectable, service} from "@loopback/core";
 import {EthereumTransactionInfoBaseService} from "./ethereum-transaction-info-base.service";
 import {EthereumTransactionInfoSlowCrawlService} from "./ethereum-transaction-info-slow-crawl.service";
 
@@ -10,5 +10,4 @@ export class EthereumTransactionInfoSlowService extends EthereumTransactionInfoB
   ) {
     super(ethereumTransactionInfoSlowCrawlService);
   }
-
 }

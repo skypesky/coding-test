@@ -1,12 +1,12 @@
 import {/* inject, */ BindingScope, injectable} from "@loopback/core";
 import {CheerioAPI, Element, load} from "cheerio";
 import {isEmpty} from "lodash";
-import {Parse} from "../interfaces/parse.interface";
+import {HtmlParse} from "../interfaces/parse.interface";
 import {EthereumTransactionInfo} from "../models/ethereum-transaction-info.model";
 
 @injectable({scope: BindingScope.TRANSIENT})
-export class DataTableParseService
-  implements Parse<string, EthereumTransactionInfo[]>
+export class SimpleTableHtmlParseService
+  implements HtmlParse<string, EthereumTransactionInfo[]>
 {
   private $: CheerioAPI;
 

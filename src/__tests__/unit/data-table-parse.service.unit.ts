@@ -1,14 +1,14 @@
 import {expect} from "@loopback/testlab";
 import {readFileSync} from "fs";
-import {DataTableParseService} from "../../services/data-table-parse.service";
+import {SimpleTableHtmlParseService} from "../../services/data-table-parse.service";
 
 describe(`data-table-parse.service.unit`, () => {
-  let dataTableParseService: DataTableParseService;
+  let dataTableParseService: SimpleTableHtmlParseService;
   let hasDataHtml: string;
   let notDataHtml: string;
 
   before(async () => {
-    dataTableParseService = new DataTableParseService();
+    dataTableParseService = new SimpleTableHtmlParseService();
 
     hasDataHtml = readFileSync(
       `${process.cwd()}/src/__tests__/fixtures/data/has-data.html`

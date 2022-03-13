@@ -3,7 +3,7 @@ import axios from "axios";
 import {AxiosResponse} from "axios-https-proxy-fix";
 import {CrawlService} from "../interfaces/crawl-service.interface";
 import {EthereumTransactionInfo} from "../models/ethereum-transaction-info.model";
-import {DataTableParseService} from "./data-table-parse.service";
+import {SimpleTableHtmlParseService} from "./data-table-parse.service";
 
 /**
  *
@@ -18,7 +18,7 @@ export class EthereumTransactionInfoSlowCrawlService
 {
   constructor(
     @service()
-    public dataTableParseService: DataTableParseService
+    public simpleTableHtmlParseService: SimpleTableHtmlParseService
   ) {}
 
   public async crawl(): Promise<EthereumTransactionInfo[]> {
@@ -27,9 +27,9 @@ export class EthereumTransactionInfoSlowCrawlService
     let pageNumber = 1,
       html = await this.getHtml(pageNumber, pageSize);
 
-    while (!this.dataTableParseService.excute(html).isEmpty()) {
+    while (!this.simpleTableHtmlParseService.excute(html).isEmpty()) {
       ethereumTransactionInfos.push(
-        ...this.dataTableParseService.excute(html).parse()
+        ...this.simpleTableHtmlParseService.excute(html).parse()
       );
       ++pageNumber;
       html = await this.getHtml(pageNumber, pageSize);

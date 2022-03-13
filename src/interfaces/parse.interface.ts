@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export interface Parse<S = any, T = any> {
-
+export interface HtmlParse<S = any, T = any> {
   /**
    *
    * @description 将html转化为有效数据
