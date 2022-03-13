@@ -22,7 +22,7 @@ export class EthereumTransactionInfoController {
     public ethereumTransactionInfoFastService: EthereumTransactionInfoFastService,
     @repository(EthereumTransactionInfoRepository)
     public ethereumTransactionInfoRepository: EthereumTransactionInfoRepository
-  ) {}
+  ) { }
 
   @get("/api/txs/{address}")
   @response(200, {
@@ -49,11 +49,17 @@ export class EthereumTransactionInfoController {
       {
         description: `<p><a href="https://loopback.io/doc/en/lb4/Where-filter" target="_blank">更多搜索用法请参考</a></p>`,
         examples: {
-          "使用方法-查询所有": {
-            value: {}
+          "使用方法-分页搜索+排序": {
+            value: {
+              "offset": 0,
+              "limit": 100,
+              "order": "createTime desc"
+            }
           },
           "使用方法-按条件搜索": {
             value: {
+              "offset": 0,
+              "limit": 100,
               "where": {
                 "txnHash":
                   "0xe2477075c6c56215e50be1b994010f19fd8d0181a8390b3bb1a4401d19da4484"
@@ -73,13 +79,9 @@ export class EthereumTransactionInfoController {
               }
             }
           },
-          "使用方法-分页搜索+排序": {
-            value: {
-              "offset": 0,
-              "limit": 100,
-              "order": "createTime desc"
-            }
-          }
+          "使用方法-查询所有": {
+            value: {}
+          },
         }
       }
     )
@@ -124,11 +126,17 @@ export class EthereumTransactionInfoController {
       {
         description: `<p><a href="https://loopback.io/doc/en/lb4/Where-filter" target="_blank">更多搜索用法请参考</a></p>`,
         examples: {
-          "使用方法-查询所有": {
-            value: {}
+          "使用方法-分页搜索+排序": {
+            value: {
+              "offset": 0,
+              "limit": 100,
+              "order": "createTime desc"
+            }
           },
           "使用方法-按条件搜索": {
             value: {
+              "offset": 0,
+              "limit": 100,
               "where": {
                 "txnHash":
                   "0xe2477075c6c56215e50be1b994010f19fd8d0181a8390b3bb1a4401d19da4484"
@@ -148,13 +156,9 @@ export class EthereumTransactionInfoController {
               }
             }
           },
-          "使用方法-分页搜索+排序": {
-            value: {
-              "offset": 0,
-              "limit": 100,
-              "order": "createTime desc"
-            }
-          }
+          "使用方法-查询所有": {
+            value: {}
+          },
         }
       }
     )
