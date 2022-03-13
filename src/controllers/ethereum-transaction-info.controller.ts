@@ -1,7 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {service} from "@loopback/core";
 import {Count, Filter, repository} from "@loopback/repository";
-import {del, get, getModelSchemaRef, param, response, tags} from "@loopback/rest";
+import {
+  del,
+  get,
+  getModelSchemaRef,
+  param,
+  response,
+  tags
+} from "@loopback/rest";
 import {EthereumTransactionInfo} from "../models";
 import {EthereumTransactionInfoRepository} from "../repositories";
 import {EthereumTransactionInfoFastService} from "../services/ethereum-transaction-info-fast.service";
@@ -15,7 +22,7 @@ export class EthereumTransactionInfoController {
     public ethereumTransactionInfoFastService: EthereumTransactionInfoFastService,
     @repository(EthereumTransactionInfoRepository)
     public ethereumTransactionInfoRepository: EthereumTransactionInfoRepository
-  ) { }
+  ) {}
 
   @get("/api/txs/{address}")
   @response(200, {
@@ -164,7 +171,7 @@ export class EthereumTransactionInfoController {
   }
 
   @del("/api/txs/cleanCache")
-  @tags('此接口可用于清空缓存')
+  @tags("此接口可用于清空缓存")
   public async cleanCache(): Promise<Count> {
     return this.ethereumTransactionInfoRepository.deleteAll();
   }
