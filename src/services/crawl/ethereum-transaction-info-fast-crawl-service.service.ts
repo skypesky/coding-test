@@ -3,6 +3,7 @@ import {Axios, AxiosResponse} from "axios";
 import {flatMap} from "lodash";
 import {CrawlService} from "../../interfaces/crawl-service.interface";
 import {EthereumTransactionInfo} from "../../models/ethereum-transaction-info.model";
+import {AxiosProvider} from "../../providers/axios.service";
 import {SimpleTableHtmlParseService} from "../parse/simple-table-html-parse.service";
 
 @injectable({scope: BindingScope.TRANSIENT})
@@ -12,7 +13,7 @@ export class EthereumTransactionInfoFastCrawlServiceService
   constructor(
     @service()
     public simpleTableHtmlParseService: SimpleTableHtmlParseService,
-    @inject("providers.AxiosProvider")
+    @inject(AxiosProvider.KEY)
     public axiosInstance: Axios
   ) {}
 
