@@ -1,5 +1,5 @@
-import {BindingScope, injectable, service} from "@loopback/core";
-import axios, {AxiosResponse} from "axios";
+import {BindingScope, inject, injectable, service} from "@loopback/core";
+import {Axios, AxiosResponse} from "axios";
 import {flatMap} from "lodash";
 import {CrawlService} from "../../interfaces/crawl-service.interface";
 import {EthereumTransactionInfo} from "../../models/ethereum-transaction-info.model";
@@ -11,12 +11,15 @@ export class EthereumTransactionInfoFastCrawlServiceService
 {
   constructor(
     @service()
-    public simpleTableHtmlParseService: SimpleTableHtmlParseService
+    public simpleTableHtmlParseService: SimpleTableHtmlParseService,
+    @inject("providers.AxiosProvider")
+    public axiosInstance: Axios
   ) {}
 
   public async crawl(address: string): Promise<EthereumTransactionInfo[]> {
     const pageSize = 100;
     const html = await this.getHtml(1, pageSize, address);
+
     // 我想知道总共有多少条记录,以便我可以批量去请求数据
     const totalRows: number = this.simpleTableHtmlParseService
         .excute(html)
@@ -49,7 +52,7 @@ export class EthereumTransactionInfoFastCrawlServiceService
     pageSize: number,
     address: string
   ): Promise<string> {
-    return axios
+    return this.axiosInstance
       .get<string, AxiosResponse<string>>(
         `https://etherscan.io/txs?a=${address}&ps=${pageSize}&p=${pageNumber}`,
         {

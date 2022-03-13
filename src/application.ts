@@ -7,8 +7,9 @@ import {
   RestExplorerComponent
 } from "@loopback/rest-explorer";
 import {ServiceMixin} from "@loopback/service-proxy";
-import axios from "axios";
+import axios, {Axios} from "axios";
 import path from "path";
+import {AxiosProvider} from "./providers/axios.service";
 import {MySequence} from "./sequence";
 import {AppProxy} from "./type";
 
@@ -45,6 +46,9 @@ export class CodingTestApplication extends BootMixin(
 
     // 显示详细报错到前端
     this.bind(RestBindings.ERROR_WRITER_OPTIONS).to({debug: true});
+
+    // 绑定provider
+    this.bind<Axios>(AxiosProvider.KEY).toProvider(AxiosProvider);
 
     axios.defaults.proxy = this.getCurrentProxy();
   }

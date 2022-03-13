@@ -1,3 +1,4 @@
+export * from "../providers/axios.service";
 export * from "./crawl/ethereum-transaction-info-fast-crawl-service.service";
 export * from "./ethereum-transaction-info-base.service";
 export * from "./ethereum-transaction-info-fast.service";
