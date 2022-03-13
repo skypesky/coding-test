@@ -21,27 +21,31 @@ export class EthereumTransactionInfoSlowCrawlService
     public simpleTableHtmlParseService: SimpleTableHtmlParseService
   ) {}
 
-  public async crawl(): Promise<EthereumTransactionInfo[]> {
+  public async crawl(address: string): Promise<EthereumTransactionInfo[]> {
     const pageSize = 100,
       ethereumTransactionInfos: EthereumTransactionInfo[] = [];
     let pageNumber = 1,
-      html = await this.getHtml(pageNumber, pageSize);
+      html = await this.getHtml(pageNumber, pageSize, address);
 
     while (!this.simpleTableHtmlParseService.excute(html).isEmpty()) {
       ethereumTransactionInfos.push(
         ...this.simpleTableHtmlParseService.excute(html).parse()
       );
       ++pageNumber;
-      html = await this.getHtml(pageNumber, pageSize);
+      html = await this.getHtml(pageNumber, pageSize, address);
     }
 
     return ethereumTransactionInfos;
   }
 
-  public async getHtml(pageNumber: number, pageSize: number): Promise<string> {
+  public async getHtml(
+    pageNumber: number,
+    pageSize: number,
+    address: string
+  ): Promise<string> {
     return axios
       .get<string, AxiosResponse<string>>(
-        `https://etherscan.io/txs?a=0xeb2a81e229b68c1c22b6683275c00945f9872d90&ps=${pageSize}&p=${pageNumber}`,
+        `https://etherscan.io/txs?a=${address}&ps=${pageSize}&p=${pageNumber}`,
         {
           responseType: "document"
         }

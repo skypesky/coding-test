@@ -14,9 +14,9 @@ export class EthereumTransactionInfoFastCrawlServiceService
     public simpleTableHtmlParseService: SimpleTableHtmlParseService
   ) {}
 
-  public async crawl(): Promise<EthereumTransactionInfo[]> {
+  public async crawl(address: string): Promise<EthereumTransactionInfo[]> {
     const pageSize = 100;
-    const html = await this.getHtml(1, pageSize);
+    const html = await this.getHtml(1, pageSize, address);
     // 我想知道总共有多少条记录,以便我可以批量去请求数据
     const totalRows: number = this.simpleTableHtmlParseService
         .excute(html)
@@ -25,7 +25,7 @@ export class EthereumTransactionInfoFastCrawlServiceService
 
     const martixs = await Promise.all(
       new Array(maxPageNumber).fill(null).map((v, i) => {
-        return this.getHtml(i + 1, pageSize).then(_html =>
+        return this.getHtml(i + 1, pageSize, address).then(_html =>
           this.simpleTableHtmlParseService.excute(_html).parse()
         );
       })
@@ -40,13 +40,18 @@ export class EthereumTransactionInfoFastCrawlServiceService
    * @tips 这一段可以抽取成共用的函数
    * @param {number} pageNumber
    * @param {number} pageSize
+   * @param {string} address
    * @return {*}  {Promise<string>}
    * @memberof EthereumTransactionInfoFastCrawlServiceService
    */
-  public async getHtml(pageNumber: number, pageSize: number): Promise<string> {
+  public async getHtml(
+    pageNumber: number,
+    pageSize: number,
+    address: string
+  ): Promise<string> {
     return axios
       .get<string, AxiosResponse<string>>(
-        `https://etherscan.io/txs?a=0xeb2a81e229b68c1c22b6683275c00945f9872d90&ps=${pageSize}&p=${pageNumber}`,
+        `https://etherscan.io/txs?a=${address}&ps=${pageSize}&p=${pageNumber}`,
         {
           responseType: "document"
         }

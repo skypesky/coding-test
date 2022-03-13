@@ -1,6 +1,6 @@
 import {expect} from "@loopback/testlab";
 import {readFileSync} from "fs";
-import {SimpleTableHtmlParseService} from "../../../services/parse/simple-table-html-parse.service";
+import {SimpleTableHtmlParseService} from "../../../../services/parse/simple-table-html-parse.service";
 
 describe(`simple-table-html-parse.service.unit`, () => {
   let simpleTableHtmlParseService: SimpleTableHtmlParseService;

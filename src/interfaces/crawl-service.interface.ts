@@ -7,5 +7,5 @@ export interface CrawlService<D = any> {
    * @return {*}  {(D | Promise<D>)}
    * @memberof CrawlService
    */
-  crawl(): D | Promise<D>;
+  crawl(address: string): D | Promise<D>;
 }
