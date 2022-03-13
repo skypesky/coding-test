@@ -1,1 +1,1 @@
-export * from './ethereum-transaction-info.datasource';
+export * from "./ethereum-transaction-info.datasource";

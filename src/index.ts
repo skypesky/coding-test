@@ -1,6 +1,6 @@
-import {ApplicationConfig, CodingTestApplication} from './application';
+import {ApplicationConfig, CodingTestApplication} from "./application";
 
-export * from './application';
+export * from "./application";
 
 export async function main(options: ApplicationConfig = {}) {
   const app = new CodingTestApplication(options);
@@ -28,12 +28,12 @@ if (require.main === module) {
       gracePeriodForClose: 5000, // 5 seconds
       openApiSpec: {
         // useful when used with OpenAPI-to-GraphQL to locate your application
-        setServersFromRequest: true,
-      },
-    },
+        setServersFromRequest: true
+      }
+    }
   };
   main(config).catch(err => {
-    console.error('Cannot start the application.', err);
+    console.error("Cannot start the application.", err);
     process.exit(1);
   });
 }

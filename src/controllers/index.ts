@@ -1,1 +1,1 @@
-export * from './ethereum-transaction-info.controller';
+export * from "./ethereum-transaction-info.controller";

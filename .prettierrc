@@ -1,7 +1,8 @@
 {
   "bracketSpacing": false,
-  "singleQuote": true,
+  "singleQuote": false,
   "printWidth": 80,
-  "trailingComma": "all",
-  "arrowParens": "avoid"
+  "trailingComma": "none",
+  "arrowParens": "avoid",
+  "quoteProps": "preserve"
 }

@@ -1,10 +1,10 @@
-import {BindingScope, inject, injectable} from '@loopback/core';
-import {DefaultCrudRepository} from '@loopback/repository';
-import {EthereumTransactionInfoDataSource} from '../datasources';
+import {BindingScope, inject, injectable} from "@loopback/core";
+import {DefaultCrudRepository} from "@loopback/repository";
+import {EthereumTransactionInfoDataSource} from "../datasources";
 import {
   EthereumTransactionInfo,
-  EthereumTransactionInfoRelations,
-} from '../models';
+  EthereumTransactionInfoRelations
+} from "../models";
 
 /**
  *
@@ -14,7 +14,7 @@ import {
  * @extends {DefaultCrudRepository<EthereumTransactionInfo, typeof EthereumTransactionInfo.prototype.txnHash, EthereumTransactionInfoRelations>}
  */
 @injectable({
-  scope: BindingScope.SINGLETON,
+  scope: BindingScope.SINGLETON
 })
 export class EthereumTransactionInfoRepository extends DefaultCrudRepository<
   EthereumTransactionInfo,
@@ -22,8 +22,8 @@ export class EthereumTransactionInfoRepository extends DefaultCrudRepository<
   EthereumTransactionInfoRelations
 > {
   constructor(
-    @inject('datasources.EthereumTransactionInfo')
-    dataSource: EthereumTransactionInfoDataSource,
+    @inject("datasources.EthereumTransactionInfo")
+    dataSource: EthereumTransactionInfoDataSource
   ) {
     super(EthereumTransactionInfo, dataSource);
   }

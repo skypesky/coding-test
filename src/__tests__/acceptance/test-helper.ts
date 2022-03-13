@@ -1,9 +1,9 @@
-import {CodingTestApplication} from '../..';
+import {CodingTestApplication} from "../..";
 import {
   createRestAppClient,
   givenHttpServerConfig,
-  Client,
-} from '@loopback/testlab';
+  Client
+} from "@loopback/testlab";
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({
@@ -15,7 +15,7 @@ export async function setupApplication(): Promise<AppWithClient> {
   });
 
   const app = new CodingTestApplication({
-    rest: restConfig,
+    rest: restConfig
   });
 
   await app.boot();
