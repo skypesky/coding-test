@@ -12,15 +12,15 @@ export class EthereumTransactionInfoFastCrawlServiceService
   constructor(
     @service()
     public dataTableParseService: DataTableParseService
-  ) { }
+  ) {}
 
   public async crawl(): Promise<EthereumTransactionInfo[]> {
     const pageSize = 100;
     const html = await this.getHtml(1, pageSize);
     // 我想知道总共有多少条记录,以便我可以批量去请求数据
     const totalRows: number = this.dataTableParseService
-      .excute(html)
-      .getTotalRows(),
+        .excute(html)
+        .getTotalRows(),
       maxPageNumber = Math.ceil(totalRows / pageSize);
 
     const martixs = await Promise.all(

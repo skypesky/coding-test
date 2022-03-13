@@ -4,7 +4,7 @@ import {Count, Filter, repository} from "@loopback/repository";
 import {get, getModelSchemaRef, param, post, response} from "@loopback/rest";
 import {EthereumTransactionInfo} from "../models";
 import {EthereumTransactionInfoRepository} from "../repositories";
-import {EthereumTransactionInfoFastService} from '../services/ethereum-transaction-info-fast.service';
+import {EthereumTransactionInfoFastService} from "../services/ethereum-transaction-info-fast.service";
 import {EthereumTransactionInfoSlowService} from "../services/ethereum-transaction-info-slow.service";
 
 export class EthereumTransactionInfoController {
@@ -15,7 +15,7 @@ export class EthereumTransactionInfoController {
     public ethereumTransactionInfoFastService: EthereumTransactionInfoSlowService,
     @repository(EthereumTransactionInfoRepository)
     public ethereumTransactionInfoRepository: EthereumTransactionInfoRepository
-  ) { }
+  ) {}
 
   @get("/api/txs/{address}")
   @response(200, {

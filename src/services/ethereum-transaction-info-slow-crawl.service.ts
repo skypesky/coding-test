@@ -19,7 +19,7 @@ export class EthereumTransactionInfoSlowCrawlService
   constructor(
     @service()
     public dataTableParseService: DataTableParseService
-  ) { }
+  ) {}
 
   public async crawl(): Promise<EthereumTransactionInfo[]> {
     const pageSize = 100,
