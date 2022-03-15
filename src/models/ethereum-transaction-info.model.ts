@@ -5,6 +5,16 @@ export class EthereumTransactionInfo extends Entity {
   @property({
     type: "string",
     id: true,
+    // 自动生成一个uuid()
+    defaultFn: "uuid",
+    jsonSchema: {
+      description: `形如: fb0eadc0-a468-11ec-bca3-5d80ccca65e0`
+    }
+  })
+  uuid: string;
+
+  @property({
+    type: "string",
     generated: false,
     required: true,
     jsonSchema: {

@@ -18,7 +18,7 @@ import {
 })
 export class EthereumTransactionInfoRepository extends DefaultCrudRepository<
   EthereumTransactionInfo,
-  typeof EthereumTransactionInfo.prototype.txnHash,
+  typeof EthereumTransactionInfo.prototype.uuid,
   EthereumTransactionInfoRelations
 > {
   constructor(
