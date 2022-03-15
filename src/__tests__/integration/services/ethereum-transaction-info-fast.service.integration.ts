@@ -68,7 +68,7 @@ describe(`ethereum-transaction-info-fast.service.unit`, () => {
         }
       });
 
-      expect(results).containDeep(results);
+      expect(results).containDeep(expectValue);
 
       sinon.assert.calledWith(
         ethereumTransactionInfoFastCrawlServiceService.stubs.crawl,
@@ -83,7 +83,7 @@ describe(`ethereum-transaction-info-fast.service.unit`, () => {
           ethereumTransactionInfoRepository
         );
 
-      const cacheValue = [
+      const expectValue = [
         new EthereumTransactionInfo({
           "txnHash":
             "0x00b7ab5c6ff7ea29166029be256c06c1357f314bcab622532bdc09f78041cc2d",
@@ -99,7 +99,7 @@ describe(`ethereum-transaction-info-fast.service.unit`, () => {
         })
       ];
 
-      await ethereumTransactionInfoRepository.createAll(cacheValue);
+      await ethereumTransactionInfoRepository.createAll(expectValue);
 
       // 假装返回空数组
       ethereumTransactionInfoFastCrawlServiceService.stubs.crawl.resolves([]);
@@ -110,7 +110,7 @@ describe(`ethereum-transaction-info-fast.service.unit`, () => {
         }
       });
 
-      expect(results).containDeep(results);
+      expect(results).containDeep(expectValue);
 
       // 正常来说走了缓存的话,你应该不会调用到我
       sinon.assert.notCalled(

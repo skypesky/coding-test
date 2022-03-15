@@ -22,7 +22,7 @@ export class EthereumTransactionInfoController {
     public ethereumTransactionInfoFastService: EthereumTransactionInfoFastService,
     @repository(EthereumTransactionInfoRepository)
     public ethereumTransactionInfoRepository: EthereumTransactionInfoRepository
-  ) { }
+  ) {}
 
   @get("/api/txs/{address}")
   @response(200, {
@@ -81,7 +81,7 @@ export class EthereumTransactionInfoController {
           },
           "使用方法-查询所有": {
             value: {}
-          },
+          }
         }
       }
     )
@@ -158,7 +158,7 @@ export class EthereumTransactionInfoController {
           },
           "使用方法-查询所有": {
             value: {}
-          },
+          }
         }
       }
     )

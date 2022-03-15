@@ -9,7 +9,9 @@ export async function main(options: ApplicationConfig = {}) {
 
   const url = app.restServer.url;
   console.log(`Server is running at ${url}`);
-  console.log(`验证接口: ${url}/explorer/#/EthereumTransactionInfoController/EthereumTransactionInfoController.fastFindByAddress`);
+  console.log(
+    `验证接口: ${url}/explorer/#/EthereumTransactionInfoController/EthereumTransactionInfoController.fastFindByAddress`
+  );
 
   return app;
 }
